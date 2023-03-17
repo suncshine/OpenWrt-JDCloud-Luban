@@ -15,10 +15,8 @@ sed -i 's/192.168.1.1/192.168.12.1/g' package/base-files/files/bin/config_genera
 grep  192 -n3 package/base-files/files/bin/config_generate
 
 echo '-----------------修改时区为东八区'
-sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
-grep timezone -n5 package/base-files/files/bin/config_generate
-
 echo '-----------------修改主机名为 Luban'
+sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
 sed -i 's/OpenWrt/Luban/g' package/base-files/files/bin/config_generate
 grep Luban -n5 package/base-files/files/bin/config_generate
 
@@ -29,7 +27,7 @@ sed -i '/CYXluq4wUazHjmCDBCqXF/d' package/lean/default-settings/files/zzz-defaul
 
 # 修改连接数
 echo '--------修改连接数'
-sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' 
+echo 'net.netfilter.nf_conntrack_max=165535' >> package/base-files/files/etc/sysctl.conf
 cat package/base-files/files/etc/sysctl.conf
 
 # Modify the version number一个自己的名字（AutoBuild $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些都是后增加的）
@@ -41,7 +39,7 @@ sed -i 's/mu_beamformer=0/mu_beamformer=1/g' package/kernel/mac80211/files/lib/w
 # 修改默认wifi名称ssid
 sed -i 's/ssid=OpenWrt/ssid=MIWIFI_2022/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 echo '---开启MU-MIMO/修改默认wifi名称ssid'
-cat package/kernel/mac80211/files/lib/wifi/mac80211.sh
+grep ssid -n10 package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # 更换腾讯源
 sed -i 's#downloads.openwrt.org#mirrors.aliyun.com/openwrt#g' 
@@ -50,7 +48,7 @@ cat /etc/opkg/distfeeds.conf
 echo "-----------------修改u-boot的ramips"
 sed -i 's/yuncore,ax820/jdcloud,luban/g' package/boot/uboot-envtools/files/ramips
 
-grep all5002 -n5 package/boot/uboot-envtools/files/ramips
+grep jdcloud -n5 package/boot/uboot-envtools/files/ramips
 
 echo '-----------------载入 mt7621_jdcloud_luban.dts'
 curl --retry 3 -s --globoff "https://gist.githubusercontent.com/vki888/dffcf844d8ff693d8057e2f3fde545dc/raw/49ea35f37c0f384fba0caba0dfe65e7d29ca4acc/%255Bopenwrt%255Dmt7621_jdcloud_luban.dts" -o target/linux/ramips/dts/mt7621_jdcloud_luban.dts
@@ -58,13 +56,12 @@ cat target/linux/ramips/dts/mt7621_jdcloud_luban.dts
 
 # fix2 + fix4.2
 echo '-----------------修补 mt7621.mk'
-grep adslr_g7 -n10 target/linux/ramips/image/mt7621.mk
 sed -i '/Device\/adslr_g7/i\define Device\/jdcloud_luban\n  \$(Device\/dsa-migration)\n  \$(Device\/uimage-lzma-loader)\n  IMAGE_SIZE := 15808k\n  DEVICE_VENDOR := JDCloud\n  DEVICE_MODEL := luban\n  DEVICE_PACKAGES := kmod-fs-ext4 kmod-mt7915-firmware kmod-mt7915e kmod-sdhci-mt7620 uboot-envtools kmod-mmc kmod-mtk-hnat kmod-mtd-rw wpad-openssl\nendef\nTARGET_DEVICES += jdcloud_luban\n\n' target/linux/ramips/image/mt7621.mk
-grep jdcloud_luban -n10 target/linux/ramips/image/mt7621.mk
+grep 'Device/jdcloud_luban' -n10 target/linux/ramips/image/mt7621.mk
 
 # fix3 + fix5.2
 echo '-----------------修补 02-network'
-sed -i '/gehua,ghl-r-001|\\/i\jdcloud,luban|\\}' target/linux/ramips/mt7621/base-files/etc/board.d/02_network
+sed -i '/gehua,ghl-r-001/i\jdcloud,luban|\\' target/linux/ramips/mt7621/base-files/etc/board.d/02_network
 grep ghl-r-001 -n3 target/linux/ramips/mt7621/base-files/etc/board.d/02_network
 
 #失败的配置，备份
