@@ -11,20 +11,41 @@
 #
 
 echo "-----------------Modify default IP"
-sed -i 's/192.168.1.1/192.168.68.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.12.1/g' package/base-files/files/bin/config_generate
 grep  192 -n3 package/base-files/files/bin/config_generate
 
 echo '-----------------修改时区为东八区'
 sed -i "s/'UTC'/'CST-8'\n        set system.@system[-1].zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
-
+grep timezone -n5 package/base-files/files/bin/config_generate
 
 echo '-----------------修改主机名为 Luban'
 sed -i 's/OpenWrt/Luban/g' package/base-files/files/bin/config_generate
+grep Luban -n5 package/base-files/files/bin/config_generate
 
-grep timezone -n5 package/base-files/files/bin/config_generate
+
+# Delete default password
+echo '-----------------删除默认密码'
+sed -i '/CYXluq4wUazHjmCDBCqXF/d' package/lean/default-settings/files/zzz-default-settings
+
+# 修改连接数
+echo '--------修改连接数'
+sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' 
+cat package/base-files/files/etc/sysctl.conf
+
+# Modify the version number一个自己的名字（AutoBuild $(TZ=UTC-8 date "+%Y.%m.%d") @ 这些都是后增加的）
+echo '--------------修改版本号显示'
+sed -i 's/OpenWrt /AutoBuild $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g' package/lean/default-settings/files/zzz-default-settings
+
+#开启MU-MIMO
+sed -i 's/mu_beamformer=0/mu_beamformer=1/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+# 修改默认wifi名称ssid
+sed -i 's/ssid=OpenWrt/ssid=MIWIFI_2022/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+echo '---开启MU-MIMO/修改默认wifi名称ssid'
+cat package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # 更换腾讯源
-#sed -i 's#downloads.openwrt.org#mirrors.cloud.tencent.com/openwrt#g' /etc/opkg/distfeeds.conf
+sed -i 's#downloads.openwrt.org#mirrors.aliyun.com/openwrt#g' 
+cat /etc/opkg/distfeeds.conf
 
 echo "-----------------修改u-boot的ramips"
 sed -i 's/yuncore,ax820/jdcloud,luban/g' package/boot/uboot-envtools/files/ramips
@@ -39,7 +60,7 @@ cat target/linux/ramips/dts/mt7621_jdcloud_luban.dts
 echo '-----------------修补 mt7621.mk'
 grep adslr_g7 -n10 target/linux/ramips/image/mt7621.mk
 sed -i '/Device\/adslr_g7/i\define Device\/jdcloud_luban\n  \$(Device\/dsa-migration)\n  \$(Device\/uimage-lzma-loader)\n  IMAGE_SIZE := 15808k\n  DEVICE_VENDOR := JDCloud\n  DEVICE_MODEL := luban\n  DEVICE_PACKAGES := kmod-fs-ext4 kmod-mt7915-firmware kmod-mt7915e kmod-sdhci-mt7620 uboot-envtools kmod-mmc kmod-mtk-hnat kmod-mtd-rw wpad-openssl\nendef\nTARGET_DEVICES += jdcloud_luban\n\n' target/linux/ramips/image/mt7621.mk
-grep adslr_g7 -n10 target/linux/ramips/image/mt7621.mk
+grep jdcloud_luban -n10 target/linux/ramips/image/mt7621.mk
 
 # fix3 + fix5.2
 echo '-----------------修补 02-network'
