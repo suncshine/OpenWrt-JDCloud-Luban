@@ -43,8 +43,8 @@ grep -E 'ssid|mu_beam' -n10 package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # 更换清华源
 echo '---更换清华源'
-sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' /etc/opkg/distfeeds.conf
-cat /etc/opkg/distfeeds.conf
+sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' package/base-files/files/etc/opkg/distfeeds.conf
+cat package/base-files/files/etc/opkg/distfeeds.conf
 
 echo "------修改u-boot的ramips"
 sed -i 's/yuncore,ax820/jdcloud,luban/g' package/boot/uboot-envtools/files/ramips
@@ -62,7 +62,7 @@ grep 'Device/jdcloud_luban' -n10 target/linux/ramips/image/mt7621.mk
 
 # fix3 + fix5.2
 echo '-------修补 02-network'
-sed -i '/gehua,ghl-r-001/i\ jdcloud,luban|\\' target/linux/ramips/mt7621/base-files/etc/board.d/02_network
+sed -i '/gehua,ghl-r-001/i\\tjdcloud,luban|\\' target/linux/ramips/mt7621/base-files/etc/board.d/02_network
 grep ghl-r-001 -n3 target/linux/ramips/mt7621/base-files/etc/board.d/02_network
 
 #失败的配置，备份
