@@ -41,7 +41,7 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-ap
 #开启MU-MIMO
 sed -i 's/mu_beamformer=0/mu_beamformer=1/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 # 修改默认wifi名称ssid
-sed -i 's/ssid=OpenWrt/ssid=JDC_0601/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+sed -i 's/ssid=OpenWrt/ssid=JDCwifi_3294/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 echo '---开启MU-MIMO/修改默认wifi名称ssid'
 grep -E 'ssid|mu_beam' -n10 package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
