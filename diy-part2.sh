@@ -42,9 +42,9 @@ echo '---开启MU-MIMO/修改默认wifi名称ssid'
 grep -E 'ssid|mu_beam' -n10 package/kernel/mac80211/files/lib/wifi/mac80211.sh
 
 # 更换清华源
-echo '---更换清华源'
-sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' package/base-files/files/etc/opkg/distfeeds.conf
-cat package/base-files/files/etc/opkg/distfeeds.conf
+#echo '---更换清华源'
+#sed -i 's_downloads.openwrt.org_mirrors.tuna.tsinghua.edu.cn/openwrt_' package/base-files/files/etc/opkg/distfeeds.conf
+#cat package/base-files/files/etc/opkg/distfeeds.conf
 
 echo "------修改u-boot的ramips"
 sed -i 's/yuncore,ax820/jdcloud,luban/g' package/boot/uboot-envtools/files/ramips
