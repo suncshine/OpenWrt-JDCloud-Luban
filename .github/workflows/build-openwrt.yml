@@ -128,7 +128,7 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        tar -zcvf Packages.tar.gz openwrt/bin/packages openwrt/bin/targets/*/*/packages
+        tar -zcvf Packages.tar.gz openwrt/bin/packages openwrt/bin/targets/*/*/packages openwrt/.config
         mv Packages.tar.gz openwrt/bin/targets/*/*
         cd openwrt/bin/targets/*/*
         rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
