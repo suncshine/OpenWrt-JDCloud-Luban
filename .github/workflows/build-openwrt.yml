@@ -30,7 +30,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: true
+  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
@@ -105,6 +105,7 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
 
     - name: Compile the firmware
+      if: 1 == 2
       id: compile
       run: |
         cd openwrt
