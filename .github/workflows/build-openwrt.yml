@@ -99,7 +99,7 @@ jobs:
       run: |
         cd openwrt
         sed -i '/^CONFIG_.*=m$/d' .config
-        make defconfig
+        make savedefconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
