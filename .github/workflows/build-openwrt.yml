@@ -102,7 +102,7 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        du -hT
+        du -sh .
 
     - name: Compile the firmware
       if: 1 == 1
