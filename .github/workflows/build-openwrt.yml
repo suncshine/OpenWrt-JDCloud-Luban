@@ -98,11 +98,11 @@ jobs:
       id: package
       run: |
         cd openwrt
-        sed -i '/^CONFIG_.*=m$/d' .config
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+        du -hT
 
     - name: Compile the firmware
       if: 1 == 1
