@@ -105,7 +105,7 @@ jobs:
         du -sh .
 
     - name: Compile the firmware
-      if: 1 == 1
+      if: 1 == 2
       id: compile
       run: |
         cd openwrt
@@ -133,9 +133,15 @@ jobs:
       run: |
         #tar -zcvf Packages.tar.gz openwrt/bin/packages openwrt/bin/targets/*/*/packages openwrt/.config
         #mv Packages.tar.gz openwrt/bin/targets/*/*
-        cd openwrt/bin/targets/*/*
-        cp ../../../../.config config
-        rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
+        #cd openwrt/bin/targets/*/*
+        #cp ../../../../.config config
+        #rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
+        tar -zcvf openwrt-src.tar.gz openwrt
+        mkdir -p /home/dist
+        cp openwrt-src.tar.gz /home/dist
+        cd /home/dist
+        ls -al
+        du -sh .
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
