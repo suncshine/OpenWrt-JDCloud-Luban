@@ -90,9 +90,9 @@ grep ghl-r-001 -n3 target/linux/ramips/mt7621/base-files/etc/board.d/02_network
 #sed -i '/pcie: pcie@1e140000/i\gsw: gsw@1e110000 {\n\tcompatible = "mediatek,mt753x";\n\treg = <0x1e110000 0x8000>;\n\tinterrupt-parent = <&gic>;\n\tinterrupts = <GIC_SHARED 23 IRQ_TYPE_LEVEL_HIGH>;\n\n\tmediatek,mcm;\n\tmediatek,mdio = <&mdio>;\n\tmt7530,direct-phy-access;\n\n\tresets = <&rstctrl 2>;\n\treset-names = "mcm";\n\tstatus = "disabled";\n\n\tport@5 {\n\n\tcompatible = "mediatek,mt753x-port";\n\treg = <5>;\n\tphy-mode = "rgmii";\n\tfixed-link {\n\tspeed = <1000>;\n\tfull-duplex;\n\t};\n\t};\n\n\tport@6 {\n\tcompatible = "mediatek,mt753x-port";\n\treg = <6>;\n\tphy-mode = "rgmii";\n\n\tfixed-link {\n\tspeed = <1000>;\n\tfull-duplex;\n\t};\n\t};\n\t};\n\t'  ./target/linux/ramips/dts/mt7621.dtsi
 #sed -i '/ethernet: ethernet@1e100000 {/i\ethsys: ethsys@1e000000 {\n\tcompatible = "mediatek,mt7621-ethsys",\n\t\t"syscon";\n\treg = <0x1e000000 0x1000>;\n\t#clock-cells = <1>;\n\t};\n\n'  ./target/linux/ramips/dts/mt7621.dtsi	
 
-#echo '-----------------定义kernel MD5，与官网一致'
-#echo '2974fbe1fa59be88f13eb8abeac8c10b' > ./.vermagic
-#cat .vermagic
+echo '-----------------定义kernel MD5，与官网一致'
+echo '2974fbe1fa59be88f13eb8abeac8c10b' > ./.vermagic
+cat .vermagic
 
-#sed -i 's/^\tgrep.*vermagic/\tcp -f \$(TOPDIR)\/\.vermagic \$(LINUX_DIR)\/\.vermagic/g' include/kernel-defaults.mk
-#grep vermagic -n5 include/kernel-defaults.mk
+sed -i 's/^\tgrep.*vermagic/\tcp -f \$(TOPDIR)\/\.vermagic \$(LINUX_DIR)\/\.vermagic/g' include/kernel-defaults.mk
+grep vermagic -n5 include/kernel-defaults.mk
