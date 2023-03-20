@@ -136,10 +136,10 @@ jobs:
         #cd openwrt/bin/targets/*/*
         #cp ../../../../.config config
         #rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
-        mkdir -p dist
+        mkdir -p /workdir/dist
         echo $PWD && ls -al
-        tar -zcvf dist/openwrt-src.tar.gz openwrt/
-        cd dist
+        tar -zcvf /workdir/dist/openwrt-src.tar.gz openwrt/*
+        cd /workdir/dist
         ls -al
         du -sh .
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
