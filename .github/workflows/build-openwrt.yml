@@ -138,7 +138,7 @@ jobs:
         #rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
         tar -zcvf openwrt-src.tar.gz openwrt
         mkdir -p /home/runner/work/dist
-        cp openwrt-src.tar.gz /home/runner/work/dist
+        mv openwrt-src.tar.gz /home/runner/work/dist
         cd /home/runner/work/dist
         ls -al
         du -sh .
