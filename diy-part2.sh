@@ -96,3 +96,5 @@ cat .vermagic
 
 sed -i 's/^\tgrep.*vermagic/\tcp -f \$(TOPDIR)\/\.vermagic \$(LINUX_DIR)\/\.vermagic/g' include/kernel-defaults.mk
 grep vermagic -n5 include/kernel-defaults.mk
+sed -i '/STAMP_BUILT/s#\$(SCRIPT_DIR)\/kconfig.pl \$(LINUX_DIR)/.config | \$(MKHASH) md5#cat $(LINUX_DIR)/.vermagic#' package/kernel/linux/Makefile
+grep STAMP_BUILT -n 3 package/kernel/linux/Makefile
