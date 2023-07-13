@@ -109,7 +109,7 @@ jobs:
         du -sh .
 
     - name: Compile the firmware
-      if: 1 == 1
+      if: 1 == 0
       id: compile
       run: |
         cd openwrt
