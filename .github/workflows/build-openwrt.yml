@@ -109,7 +109,7 @@ jobs:
         du -sh .
 
     - name: Compile the firmware
-      if: 1 == 0
+      if: 1 == 1
       id: compile
       run: |
         cd openwrt
@@ -135,15 +135,15 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
-        #tar -zcvf Packages.tar.gz openwrt/bin/packages openwrt/bin/targets/*/*/packages openwrt/.config
-        #mv Packages.tar.gz openwrt/bin/targets/*/*
-        #cd openwrt/bin/targets/*/*
-        #cp ../../../../.config config
-        #rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
-        mkdir -p /workdir/dist
-        echo $PWD && ls -al
-        tar -zcvf /workdir/dist/openwrt-src.tar.gz openwrt/*
-        cd /workdir/dist
+        tar -zcvf Packages.tar.gz openwrt/bin/packages openwrt/bin/targets/*/*/packages openwrt/.config
+        mv Packages.tar.gz openwrt/bin/targets/*/*
+        cd openwrt/bin/targets/*/*
+        cp ../../../../.config config
+        rm -rf packages config.buildinfo feeds.buildinfo sha256sums version.buildinfo *.manifest
+        #mkdir -p /workdir/dist
+        #echo $PWD && ls -al
+        #tar -zcvf /workdir/dist/openwrt-src.tar.gz openwrt/*
+        #cd /workdir/dist
         ls -al
         du -sh .
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
