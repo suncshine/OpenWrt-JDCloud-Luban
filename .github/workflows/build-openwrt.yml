@@ -43,7 +43,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@sbr-ac1750
+      uses: actions/checkout@main
 
     - name: Initialization environment
       env:
